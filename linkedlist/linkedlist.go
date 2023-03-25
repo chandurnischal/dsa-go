@@ -1,59 +1,48 @@
 package linkedlist
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
-type Node struct {
-	value int
-	next  *Node
+type node struct {
+	Value int
+	next  *node
 }
 
 type LinkedList struct {
-	head *Node
-	tail *Node
+	head *node
+	tail *node
 	size int
 }
 
 func (l *LinkedList) Append(data int) {
-	node := Node{value: data}
+	newNode := node{Value: data}
 
 	if l.head == nil {
-		l.head = &node
+		l.head = &newNode
 		l.tail = l.head
 	} else {
-		l.tail.next = &node
-		l.tail = &node
+		l.tail.next = &newNode
+		l.tail = &newNode
 	}
 	l.size++
 }
 
 func (l *LinkedList) Prepend(data int) {
-	node := Node{value: data}
+	newNode := node{Value: data}
 
 	if l.head == nil {
-		l.head = &node
+		l.head = &newNode
 		l.tail = l.head
 	} else {
-		node.next = l.head
-		l.head = &node
+		newNode.next = l.head
+		l.head = &newNode
 	}
 	l.size++
 }
 
-func (l *LinkedList) PrintList() {
-	temp := l.head
-
-	for temp != nil {
-		if temp.next != nil {
-			fmt.Printf("%d->", temp.value)
-		} else {
-			fmt.Printf("%d", temp.value)
-		}
-		temp = temp.next
-	}
-	fmt.Println()
-}
-
-func (l *LinkedList) traverseToIndex(index int) *Node {
+func (l *LinkedList) traverseToIndex(index int) *node {
 	current := l.head
 	count := 0
 	for count != index {
@@ -73,11 +62,11 @@ func (l *LinkedList) Insert(index, data int) {
 		return
 	}
 
-	node := Node{value: data}
+	newNode := node{Value: data}
 	leader := l.traverseToIndex(index - 1)
 	trailer := leader.next
-	leader.next = &node
-	node.next = trailer
+	leader.next = &newNode
+	newNode.next = trailer
 	l.size += 1
 }
 
@@ -99,4 +88,31 @@ func (l *LinkedList) Remove(index int) {
 	trailer := unwanted.next
 	leader.next = trailer
 	l.size -= 1
+}
+
+func (l *LinkedList) Search(value int) (int, error) {
+	current := l.head
+	var index int
+	for current != nil {
+		if current.Value == value {
+			return index, nil
+		}
+		current = current.next
+		index += 1
+	}
+	return -1, errors.New("not found")
+}
+
+func (l *LinkedList) PrintList() {
+	temp := l.head
+
+	for temp != nil {
+		if temp.next != nil {
+			fmt.Printf("%d->", temp.Value)
+		} else {
+			fmt.Printf("%d", temp.Value)
+		}
+		temp = temp.next
+	}
+	fmt.Println()
 }
