@@ -5,44 +5,44 @@ import (
 	"fmt"
 )
 
-type node struct {
+type Node struct {
 	Value int
-	next  *node
+	next  *Node
 }
 
 type LinkedList struct {
-	head *node
-	tail *node
+	head *Node
+	tail *Node
 	size int
 }
 
 func (l *LinkedList) Append(data int) {
-	newNode := node{Value: data}
+	node := Node{Value: data}
 
 	if l.head == nil {
-		l.head = &newNode
+		l.head = &node
 		l.tail = l.head
 	} else {
-		l.tail.next = &newNode
-		l.tail = &newNode
+		l.tail.next = &node
+		l.tail = &node
 	}
 	l.size++
 }
 
 func (l *LinkedList) Prepend(data int) {
-	newNode := node{Value: data}
+	node := Node{Value: data}
 
 	if l.head == nil {
-		l.head = &newNode
+		l.head = &node
 		l.tail = l.head
 	} else {
-		newNode.next = l.head
-		l.head = &newNode
+		node.next = l.head
+		l.head = &node
 	}
 	l.size++
 }
 
-func (l *LinkedList) traverseToIndex(index int) *node {
+func (l *LinkedList) traverseToIndex(index int) *Node {
 	current := l.head
 	count := 0
 	for count != index {
@@ -62,11 +62,11 @@ func (l *LinkedList) Insert(index, data int) {
 		return
 	}
 
-	newNode := node{Value: data}
+	node := Node{Value: data}
 	leader := l.traverseToIndex(index - 1)
 	trailer := leader.next
-	leader.next = &newNode
-	newNode.next = trailer
+	leader.next = &node
+	node.next = trailer
 	l.size += 1
 }
 

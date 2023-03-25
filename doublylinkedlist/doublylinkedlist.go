@@ -1,41 +1,44 @@
-package linkedlist
+package doublylinkedlist
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
-type node struct {
+type Node struct {
 	Value    int
-	next     *node
-	previous *node
+	next     *Node
+	previous *Node
 }
 
 type DoublyLinkedList struct {
-	head *node
-	tail *node
+	head *Node
+	tail *Node
 	size int
 }
 
 func (d *DoublyLinkedList) Append(data int) {
-	newNode := node{Value: data}
+	node := Node{Value: data}
 	if d.head == nil {
-		d.head = &newNode
+		d.head = &node
 		d.tail = d.head
 	} else {
-		newNode.previous = d.tail
-		d.tail.next = &newNode
-		d.tail = &newNode
+		node.previous = d.tail
+		d.tail.next = &node
+		d.tail = &node
 	}
 	d.size += 1
 }
 
 func (d *DoublyLinkedList) Prepend(data int) {
-	newNode := node{Value: data}
+	node := Node{Value: data}
 	if d.head == nil {
-		d.head = &newNode
+		d.head = &node
 		d.tail = d.head
 	} else {
-		newNode.next = d.head
-		d.head.previous = &newNode
-		d.head = &newNode
+		node.next = d.head
+		d.head.previous = &node
+		d.head = &node
 	}
 	d.size++
 }
@@ -54,7 +57,7 @@ func (d *DoublyLinkedList) Print() {
 	fmt.Println()
 }
 
-func (d *DoublyLinkedList) traverseToIndex(index int) *node {
+func (d *DoublyLinkedList) traverseToIndex(index int) *Node {
 	current := d.head
 	var count int
 
@@ -74,13 +77,13 @@ func (d *DoublyLinkedList) Insert(index, value int) {
 		d.Append(value)
 		return
 	}
-	newNode := node{Value: value}
+	node := Node{Value: value}
 	leader := d.traverseToIndex(index - 1)
 	follower := leader.next
-	leader.next = &newNode
-	newNode.previous = leader
-	newNode.next = follower
-	follower.previous = &newNode
+	leader.next = &node
+	node.previous = leader
+	node.next = follower
+	follower.previous = &node
 	d.size++
 }
 
@@ -103,5 +106,37 @@ func (d *DoublyLinkedList) Remove(index int) {
 	leader.next = follower
 	follower.previous = leader
 	d.size--
-	return
+}
+
+func (d *DoublyLinkedList) Search(data int) (int, error) {
+	current := d.head
+	var index int
+
+	for current != nil {
+		if current.Value == data {
+			return index, nil
+		}
+		current = current.next
+		index++
+	}
+	return -1, errors.New("not found")
+
+}
+
+func (d *DoublyLinkedList) Reverse() *DoublyLinkedList {
+	if d.head.next == nil {
+		return d
+	}
+	first := d.head
+	second := first.next
+	d.tail = d.head
+	for second != nil {
+		temp := second.next
+		second.next = first
+		first = second
+		second = temp
+	}
+	d.head.next = nil
+	d.head = first
+	return d
 }
