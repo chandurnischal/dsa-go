@@ -103,7 +103,7 @@ func (l *LinkedList) Search(value int) (int, error) {
 	return -1, errors.New("not found")
 }
 
-func (l *LinkedList) PrintList() {
+func (l *LinkedList) Print() {
 	temp := l.head
 
 	for temp != nil {
