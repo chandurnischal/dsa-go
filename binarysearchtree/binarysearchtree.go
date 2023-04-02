@@ -54,3 +54,22 @@ func (b *BST) Lookup(data int) *Node {
 	}
 	return nil
 }
+
+func (b *BST) BreadthFirstSearch() []int {
+	current := b.root
+	list := []int{}
+	queue := []*Node{current}
+	for len(queue) > 0 {
+		current = queue[0]
+		queue = queue[1:]
+		list = append(list, current.Value)
+		if current.left != nil {
+			queue = append(queue, current.left)
+		}
+		if current.right != nil {
+			queue = append(queue, current.right)
+		}
+	}
+
+	return list
+}
