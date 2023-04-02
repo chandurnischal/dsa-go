@@ -7,17 +7,17 @@ type Node struct {
 }
 
 type BST struct {
-	root *Node
+	Root *Node
 }
 
 func (b *BST) Insert(data int) {
 	node := Node{Value: data}
-	if b.root == nil {
-		b.root = &node
+	if b.Root == nil {
+		b.Root = &node
 		return
 	}
-	current := b.root
-	for b.root != nil {
+	current := b.Root
+	for b.Root != nil {
 		if data < current.Value {
 			// move left
 			if current.left == nil {
@@ -39,10 +39,10 @@ func (b *BST) Insert(data int) {
 }
 
 func (b *BST) Lookup(data int) *Node {
-	if b.root == nil {
+	if b.Root == nil {
 		return nil
 	}
-	current := b.root
+	current := b.Root
 	for current != nil {
 		if data < current.Value {
 			current = current.left
@@ -56,7 +56,7 @@ func (b *BST) Lookup(data int) *Node {
 }
 
 func (b *BST) BreadthFirstSearch() []int {
-	current := b.root
+	current := b.Root
 	list := []int{}
 	queue := []*Node{current}
 	for len(queue) > 0 {
@@ -72,4 +72,36 @@ func (b *BST) BreadthFirstSearch() []int {
 	}
 
 	return list
+}
+
+func (b *BST) Inorder(node *Node) []int {
+	res := []int{}
+	if node != nil {
+		res = append(res, b.Inorder(node.left)...)
+		res = append(res, node.Value)
+		res = append(res, b.Inorder(node.right)...)
+	}
+
+	return res
+}
+
+func (b *BST) Preoder(node *Node) []int {
+	res := []int{}
+
+	if node != nil {
+		res = append(res, node.Value)
+		res = append(res, b.Preoder(node.left)...)
+		res = append(res, b.Preoder(node.right)...)
+	}
+	return res
+}
+
+func (b *BST) PostOrder(node *Node) []int {
+	res := []int{}
+	if node != nil {
+		res = append(res, b.PostOrder(node.left)...)
+		res = append(res, b.PostOrder(node.right)...)
+		res = append(res, node.Value)
+	}
+	return res
 }
