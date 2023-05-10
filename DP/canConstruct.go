@@ -22,6 +22,9 @@ func CanConstructDP(target string, wordBank []string, memo map[string]bool) bool
 		return memo[target]
 	}
 
+	if target == "" {
+		return true
+	}
 	for _, word := range wordBank {
 		if strings.Index(target, word) == 0 {
 			remainder := target[len(word):]
