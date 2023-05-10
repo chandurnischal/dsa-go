@@ -1,4 +1,4 @@
-package dp
+package memoization
 
 import "strings"
 
@@ -36,7 +36,7 @@ func AllConstructRec(target string, wordBank []string) [][]string {
 	return res
 }
 
-func AllConstructDP(target string, wordBank []string, memo map[string][][]string) [][]string {
+func AllConstruct(target string, wordBank []string, memo map[string][][]string) [][]string {
 	if _, ok := memo[target]; ok {
 		return memo[target]
 	}
@@ -48,7 +48,7 @@ func AllConstructDP(target string, wordBank []string, memo map[string][][]string
 	for _, word := range wordBank {
 		if strings.Index(target, word) == 0 {
 			remainder := target[len(word):]
-			ways := AllConstructDP(remainder, wordBank, memo)
+			ways := AllConstruct(remainder, wordBank, memo)
 			ways = Map(word, ways, prepend)
 			res = append(res, ways...)
 		}

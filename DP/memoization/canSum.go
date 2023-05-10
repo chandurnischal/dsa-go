@@ -1,4 +1,4 @@
-package dp
+package memoization
 
 func CanSumRec(target int, nums []int) bool {
 	if target == 0 {
@@ -17,7 +17,7 @@ func CanSumRec(target int, nums []int) bool {
 	return false
 }
 
-func CanSumDP(target int, nums []int, memo map[int]bool) bool {
+func CanSum(target int, nums []int, memo map[int]bool) bool {
 	if _, ok := memo[target]; ok {
 		return memo[target]
 	}
@@ -30,7 +30,7 @@ func CanSumDP(target int, nums []int, memo map[int]bool) bool {
 
 	for _, num := range nums {
 		remainder := target - num
-		if CanSumDP(remainder, nums, memo) {
+		if CanSum(remainder, nums, memo) {
 			memo[target] = true
 			return true
 		}

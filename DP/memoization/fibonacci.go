@@ -1,4 +1,4 @@
-package dp
+package memoization
 
 func FibonacciRec(n int) int {
 	if n <= 2 {
@@ -8,13 +8,13 @@ func FibonacciRec(n int) int {
 }
 
 // returns nth Fibonacci number
-func FibonacciDP(n int, memo map[int]int) int {
+func Fibonacci(n int, memo map[int]int) int {
 	if _, ok := memo[n]; ok {
 		return memo[n]
 	}
 	if n <= 2 {
 		return 1
 	}
-	memo[n] = FibonacciDP(n-1, memo) + FibonacciDP(n-2, memo)
+	memo[n] = Fibonacci(n-1, memo) + Fibonacci(n-2, memo)
 	return memo[n]
 }

@@ -1,4 +1,4 @@
-package dp
+package memoization
 
 import "strings"
 
@@ -17,7 +17,7 @@ func CountConstructRec(target string, wordBank []string) int {
 	return totalWays
 }
 
-func CountConstructDP(target string, wordBank []string, memo map[string]int) int {
+func CountConstruct(target string, wordBank []string, memo map[string]int) int {
 	if _, ok := memo[target]; ok {
 		return memo[target]
 	}
@@ -30,7 +30,7 @@ func CountConstructDP(target string, wordBank []string, memo map[string]int) int
 	for _, word := range wordBank {
 		if strings.Index(target, word) == 0 {
 			remainder := target[len(word):]
-			ways := CountConstructDP(remainder, wordBank, memo)
+			ways := CountConstruct(remainder, wordBank, memo)
 			totalWays += ways
 
 		}

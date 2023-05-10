@@ -1,4 +1,4 @@
-package dp
+package memoization
 
 import "strings"
 
@@ -17,7 +17,7 @@ func CanConstructRec(target string, wordBank []string) bool {
 	return false
 }
 
-func CanConstructDP(target string, wordBank []string, memo map[string]bool) bool {
+func CanConstruct(target string, wordBank []string, memo map[string]bool) bool {
 	if _, ok := memo[target]; ok {
 		return memo[target]
 	}
@@ -28,7 +28,7 @@ func CanConstructDP(target string, wordBank []string, memo map[string]bool) bool
 	for _, word := range wordBank {
 		if strings.Index(target, word) == 0 {
 			remainder := target[len(word):]
-			if CanConstructDP(remainder, wordBank, memo) {
+			if CanConstruct(remainder, wordBank, memo) {
 				memo[target] = true
 				return true
 			}

@@ -1,4 +1,4 @@
-package dp
+package memoization
 
 func BestSumRec(target int, nums []int) []int {
 	if target == 0 {
@@ -23,7 +23,7 @@ func BestSumRec(target int, nums []int) []int {
 	return shortestCombo
 }
 
-func BestSumDP(target int, nums []int, memo map[int][]int) []int {
+func BestSum(target int, nums []int, memo map[int][]int) []int {
 	if _, ok := memo[target]; ok {
 		return memo[target]
 	}
@@ -38,7 +38,7 @@ func BestSumDP(target int, nums []int, memo map[int][]int) []int {
 
 	for _, num := range nums {
 		remainder := target - num
-		combo := BestSumDP(remainder, nums, memo)
+		combo := BestSum(remainder, nums, memo)
 		if combo != nil {
 			combo = append(combo, num)
 			if shortestCombo == nil || len(combo) < len(shortestCombo) {

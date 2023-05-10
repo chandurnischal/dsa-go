@@ -1,4 +1,4 @@
-package dp
+package memoization
 
 import "fmt"
 
@@ -12,7 +12,7 @@ func GridTravellerRec(m, n int) int {
 	return GridTravellerRec(m-1, n) + GridTravellerRec(m, n-1)
 }
 
-func GridTravellerDP(m, n int, memo map[string]int) int {
+func GridTraveller(m, n int, memo map[string]int) int {
 	key := fmt.Sprintf("%d,%d", m, n)
 	flippedKey := fmt.Sprintf("%d,%d", n, m)
 	if _, ok := memo[key]; ok {
@@ -27,6 +27,6 @@ func GridTravellerDP(m, n int, memo map[string]int) int {
 	if m == 0 || n == 0 {
 		return 0
 	}
-	memo[key] = GridTravellerDP(m-1, n, memo) + GridTravellerDP(m, n-1, memo)
+	memo[key] = GridTraveller(m-1, n, memo) + GridTraveller(m, n-1, memo)
 	return memo[key]
 }
