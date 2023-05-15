@@ -1,4 +1,4 @@
-package dp
+package memoization
 
 func HowSumRec(target int, nums []int) []int {
 	if target == 0 {
